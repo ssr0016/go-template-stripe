@@ -42,11 +42,47 @@
 {{end}}
 
 {{define "js"}}
-    <script scr="https://js.stripe.com/v3/"></script>
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
 
     <script>
-        func val() {
-            
-        }
+    let card;
+    let stripe;
+
+    // Initialize Stripe with your publishable key
+    stripe = Stripe('pk_test_51RgnvhQUUVe7Lp2TbcZY5PTfqZ6cWss8xJoXlr4remYG5EsfHPkDLfd7MnVvmhp669VLbjrRwGnzGsu4U4Kv7ndA00CoURu74E');
+
+    function val() {
+    }
+
+    (function () {
+        // Create Stripe elements
+        const elements = stripe.elements();
+        const style = {
+            base: {
+                fontSize: '16px',
+                lineHeight: '24px'
+            }
+        };
+
+        // Create card input
+        card = elements.create('card', {
+            style: style,
+            hidePostalCode: true
+        });
+        card.mount('#card-element');
+
+        // Listen for validation errors
+        card.addEventListener('change', function (event) {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.classList.remove('d-none');
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.classList.add('d-none');
+                displayError.textContent = '';
+            }
+        });
+    })();
     </script>
 {{end}}
