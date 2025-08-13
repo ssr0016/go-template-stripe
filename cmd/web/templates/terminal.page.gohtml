@@ -61,6 +61,11 @@
     // Initialize Stripe with your publishable key
     stripe = Stripe('pk_test_51RgnvhQUUVe7Lp2TbcZY5PTfqZ6cWss8xJoXlr4remYG5EsfHPkDLfd7MnVvmhp669VLbjrRwGnzGsu4U4Kv7ndA00CoURu74E');
 
+    function hidePayButton() {
+        payButton.classList.add('d-none');
+        processing.classList.remove('d-none');
+    }
+
     function val() {
         let form = document.getElementById('charge_form');
         if(form.checkVisibility() === false) {
@@ -70,7 +75,7 @@
             return;
         }
         form.classList.add('was-validated');
-
+        hidePayButton();
     }
 
     (function () {
